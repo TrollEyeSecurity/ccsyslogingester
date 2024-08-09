@@ -1,0 +1,8 @@
+#!/bin/bash
+
+FILE=/etc/ccsyslog/config.json
+TEMP_DIR=/tmp/ccsyslog/
+if [[ -f "$FILE" ]]; then
+  mkdir -p $TEMP_DIR
+  cp "$FILE" $TEMP_DIR
+fi

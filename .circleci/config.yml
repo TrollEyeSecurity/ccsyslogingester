@@ -1,0 +1,30 @@
+version: 2.1
+
+jobs:
+  build-and-push-image:
+    environment:
+      PKG_NAME:
+        ccsyslog_1.0.0
+    docker:
+      - image: cimg/go:1.20.3
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          command: echo "Building ccsyslog"
+      - run:
+          name: Build and push apt package
+          command: |
+            make build_dpkg
+            curl -F package=@$PKG_NAME-0ubuntu_amd64.deb https://$TOKEN@push.fury.io/trolleyesecurity/
+
+workflows:
+  version: 2
+  build-and-test:
+    when:
+      and:
+        - equal: [ master, << pipeline.git.branch >> ]
+    jobs:
+      - build-and-push-image:
+          context:
+            - furyio

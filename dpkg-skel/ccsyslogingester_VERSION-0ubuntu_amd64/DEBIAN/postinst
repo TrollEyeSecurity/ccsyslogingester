@@ -1,0 +1,17 @@
+#!/bin/bash
+
+id -u ccsyslog &>/dev/null || useradd ccsyslog --system --shell=/usr/sbin/nologin --home-dir=/etc/ccsyslog
+usermod -aG docker ccsyslog
+
+CONFIG=config.json
+CONFIG_DIR=/etc/ccsyslog/
+CONFIG_FILE=/tmp/ccsyslog/$CONFIG
+if [[ -f "$CONFIG_FILE" ]];
+then
+    cp "$CONFIG_FILE" $CONFIG_DIR$CONFIG
+else
+  mkdir -p $CONFIG_DIR
+  echo '{"sentry_io_dsn": ""}' > $CONFIG_DIR$CONFIG
+fi
+
+chown ccsyslog:ccsyslog -R $CONFIG_DIR

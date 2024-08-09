@@ -1,0 +1,12 @@
+[Unit]
+Description=command center syslog ingester service
+After=network.target
+
+[Service]
+Restart=always
+RestartSec=1
+User=ccscanner
+ExecStart=/usr/bin/ccsyslogingester --config=/etc/ccsyslog/config.json
+
+[Install]
+WantedBy=multi-user.target
