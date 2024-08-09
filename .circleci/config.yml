@@ -4,7 +4,7 @@ jobs:
   build-and-push-image:
     environment:
       PKG_NAME:
-        ccsyslog_1.0.0
+        ccsyslog_1.0.1
     docker:
       - image: cimg/go:1.20.3
     steps:
