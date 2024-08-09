@@ -1,11 +1,11 @@
 VERSION=1.0.0
 GOCMD=go
 GOBUILD=$(GOCMD) build
-INGESTER=ccsyslogingester/main.go
-SHIPPER=ccsyslogshipper/main.go
+INGESTER=ccsyslogingesterservice/main.go
+SHIPPER=ccsyslogshipperservice/main.go
 
-INGESTER_BIN=ccsyslogingester
-SHIPPER_BIN=ccsyslogshipper
+INGESTER_BIN=ccsyslogingesterservice
+SHIPPER_BIN=ccsyslogshipperservice
 
 CMD=cmd/
 
