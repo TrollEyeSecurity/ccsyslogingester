@@ -23,7 +23,7 @@ workflows:
   build-and-test:
     when:
       and:
-        - equal: [ master, << pipeline.git.branch >> ]
+        - equal: [ main, << pipeline.git.branch >> ]
     jobs:
       - build-and-push-image:
           context:
