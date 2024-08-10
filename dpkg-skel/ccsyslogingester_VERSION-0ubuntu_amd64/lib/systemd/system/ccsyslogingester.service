@@ -6,7 +6,7 @@ After=network.target
 Restart=always
 RestartSec=1
 User=ccsyslog
-ExecStart=/usr/bin/ccsyslogingester --config=/etc/ccsyslog/config.json
+ExecStart=/usr/bin/ccsyslogingesterservice --config=/etc/ccsyslog/config.json
 
 [Install]
 WantedBy=multi-user.target
