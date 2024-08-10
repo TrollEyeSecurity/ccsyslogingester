@@ -6,6 +6,7 @@ After=network.target
 Restart=always
 RestartSec=1
 User=ccsyslog
+Environment="BROKER_URL=redis://:@127.0.0.1:6379/0"
 ExecStart=/usr/bin/ccsyslogshipperservice --config=/etc/ccsyslog/config.json
 
 [Install]

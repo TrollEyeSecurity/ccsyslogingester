@@ -1,4 +1,4 @@
-VERSION=1.0.4
+VERSION=1.0.5
 GOCMD=go
 GOBUILD=$(GOCMD) build
 INGESTER=ccsyslogingesterservice/main.go
