@@ -92,8 +92,8 @@ func HandleMsg(msg *[]byte, remoteAddr *string) {
 		log.Println(err)
 		return
 	}
-
 	cefMessage := syslogs.CefMessage{
+		Time:           time.Now(),
 		RemoteAddr:     *remoteAddr,
 		CefVersion:     cefVersionInt,
 		ProductVendor:  productVendor,
@@ -103,7 +103,7 @@ func HandleMsg(msg *[]byte, remoteAddr *string) {
 		EventName:      eventName,
 		EventSeverity:  eventSeverity,
 		SyslogMsg:      syslogMsg,
-		JsonMsg:        string(*jsonMsg),
+		JsonMsg:        *jsonMsg,
 	}
 
 	cefMessageByte, jsonMarshalErr := json.Marshal(cefMessage)
@@ -111,12 +111,6 @@ func HandleMsg(msg *[]byte, remoteAddr *string) {
 		err := fmt.Errorf("json-marshal error %v", jsonMarshalErr)
 		sentry.CaptureException(err)
 		log.Println(err)
-	}
-
-	logMessage := syslogs.LogEvent{
-		IngestionTime: time.Now().Unix(),
-		Message:       string(cefMessageByte),
-		Timestamp:     time.Now().Unix(),
 	}
 
 	rdb, getRedisClientErr := redis.GetRedisClient()
@@ -127,15 +121,9 @@ func HandleMsg(msg *[]byte, remoteAddr *string) {
 		log.Println(err)
 		return
 	}
-	a, jsonMarshalErr1 := json.Marshal(logMessage)
-	if jsonMarshalErr1 != nil {
-		err := fmt.Errorf("json-marshal error1 %v", jsonMarshalErr1)
-		fmt.Println(err)
-		sentry.CaptureException(err)
-		log.Println(err)
-		return
-	}
-	rdb.LPush(redis.SIEMTasksQueue, a)
+
+	rdb.LPush(redis.SIEMTasksQueue, cefMessageByte)
+
 }
 
 func MakeJson(array *[]string) (*[]byte, error) {
