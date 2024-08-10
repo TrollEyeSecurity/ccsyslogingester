@@ -2,22 +2,22 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 )
 
-func LoadConfiguration(file string) Config {
+func LoadConfiguration(file string) (Config, error) {
 	var config Config
-	if file != "" {
-		configFile, err := os.Open(file)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
-		if configFile != nil {
-			jsonParser := json.NewDecoder(configFile)
-			jsonParser.Decode(&config)
-			configFile.Close()
-		}
+	configFile, err := os.Open(file)
+	if err != nil {
+		return config, err
 	}
-	return config
+	if configFile != nil {
+		jsonParser := json.NewDecoder(configFile)
+		e := jsonParser.Decode(&config)
+		if e != nil {
+			return config, e
+		}
+		configFile.Close()
+	}
+	return config, nil
 }
