@@ -2,7 +2,7 @@ Package: ccsyslogingester
 Architecture: amd64
 Maintainer: Avery Rozar <avery.rozar@trolleyesecurity.com>
 Priority: optional
-Version: 1.0.1
+Version: 1.0.2
 Description: command center sys log ingester receives syslog messages in CEF format and ships them to S3.
 Depends: docker.io (>=20.10.12-0ubuntu4), docker-compose (>=1.29.2-1), sysstat (>=12.5.2-2build2), openvpn (>=2.5.5-1ubuntu3.1)
 Bugs: https://github.com/TrollEyeSecurity/ccsyslogingester/issues
