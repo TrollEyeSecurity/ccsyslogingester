@@ -54,6 +54,7 @@ func ShipperService() {
 			log.Println(err)
 			break
 		}
+
 		ts := aws.Int64(time.Now().UnixNano() / int64(time.Millisecond))
 		cwLog := cloudwatchlogs.InputLogEvent{Message: &result[1], Timestamp: ts}
 		var logQueue []*cloudwatchlogs.InputLogEvent
@@ -91,5 +92,6 @@ func ShipperService() {
 		if resp != nil {
 			sequenceToken = *resp.NextSequenceToken
 		}
+
 	}
 }
